@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'com.techdozo'
-version = '0.0.1-SNAPSHOT'
+version = '0.0.1'
 sourceCompatibility = '11'
 
 configurations {
@@ -17,11 +17,15 @@ configurations {
 repositories {
 	mavenCentral()
 }
-
+def mapstructVersion = '1.4.2.Final'
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.hibernate:hibernate-validator:6.1.5.Final'
 	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor "org.projectlombok:lombok"
+	implementation "org.mapstruct:mapstruct:${mapstructVersion}"
+	annotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}"
 	runtimeOnly 'com.h2database:h2'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'

@@ -1,0 +1,379 @@
+---
+openapi: 3.0.0
+info:
+  title: Product catalog service
+  description: "The product catalog API supports the creation and management of the product. The API includes the following capabilities and operations:\n\n**Create Product**\n\n**Update Product**\n\n**Delete Product**\n\n**Publish Product**\n\n<br>\nThe following resource collections are offered by this API:\n\n\n**Products** - Products represents collection of products that is sold by seller. \n\n"
+  version: 1.0.0
+servers:
+- url: https://virtserver.swaggerhub.com/techdozo5/product-catalog/1.0.0
+  description: SwaggerHub API Auto Mocking
+- url: localhost:8080
+  description: local
+tags:
+- name: Seller
+paths:
+  /products:
+    get:
+      tags:
+      - Seller
+      summary: Return list of products.
+      description: |
+        Return list of products.
+      operationId: ListProducts
+      parameters:
+      - name: sellerId
+        in: header
+        description: Id of the seller
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        example: SL-1234-68686755
+      - name: status
+        in: query
+        description: Status of the product (DRAFT,PUBLISHED).
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: DRAFT
+      - name: query
+        in: query
+        description: Free text search query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: Apple
+      responses:
+        "200":
+          description: List of all products based on optional status or free text search query.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Products'
+        "401":
+          description: Not authorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        "500":
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    put:
+      tags:
+      - Seller
+      summary: Update product.
+      description: |
+        Update product.
+      operationId: updateProduct
+      parameters:
+      - name: sellerId
+        in: header
+        description: Id of the seller
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        example: SL-1234-68686755
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Product'
+      responses:
+        "200":
+          description: Product updated successfully.
+        "201":
+          description: Product created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductResponse'
+        "401":
+          description: Not authorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        "500":
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    post:
+      tags:
+      - Seller
+      summary: Create a new product.
+      operationId: CreateProduct
+      parameters:
+      - name: sellerId
+        in: header
+        description: Id of the seller.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        example: SL-1234-68686755
+      requestBody:
+        $ref: '#/components/requestBodies/Product'
+      responses:
+        "201":
+          description: Product created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductResponse'
+        "401":
+          description: Not authorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        "500":
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /products/{productId}:
+    get:
+      tags:
+      - Seller
+      summary: Retrive product for a given product Id.
+      description: |
+        API to get product for a given product Id.
+      operationId: getProductByID
+      parameters:
+      - name: productId
+        in: path
+        description: Id of the product.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: number
+      - name: sellerId
+        in: header
+        description: Id of the seller.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        example: SL-1234-68686755
+      responses:
+        "200":
+          description: Return the product for a productId.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        "401":
+          description: Not authorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        "404":
+          description: Product not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        "500":
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    delete:
+      tags:
+      - Seller
+      summary: Delete product.
+      description: delete product by id.
+      operationId: DeleteProduct
+      parameters:
+      - name: productId
+        in: path
+        description: Id of product to be deleted
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: number
+      - name: sellerId
+        in: header
+        description: Id of the seller
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        example: SL-1234-68686755
+      responses:
+        "200":
+          description: Successfully deleted product.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        "401":
+          description: Not authorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        "404":
+          description: Product not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        "500":
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /products/{productId}/publish:
+    post:
+      tags:
+      - Seller
+      summary: Publish product
+      description: Publish product. After products are published it can be bought by buyer.
+      operationId: PublishProduct
+      parameters:
+      - name: productId
+        in: path
+        description: ID of product.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: number
+      - name: sellerId
+        in: header
+        description: Id of the seller
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        example: SL-1234-68686755
+      responses:
+        "200":
+          description: Product published.
+        "401":
+          description: Not authorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        "404":
+          description: Resource not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        "500":
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    Products:
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Product'
+    Product:
+      type: object
+      properties:
+        productId:
+          type: number
+          description: Unique identifier of the product
+          example: 867856
+        productName:
+          type: string
+          description: name of the product
+          example: Apple iPhone 12 (64GB)
+        productStatus:
+          type: string
+          description: status of product
+          example: Draft
+          enum:
+          - Draft
+          - Published
+        description:
+          type: string
+          description: description about the product
+          example: 6.1-inch (15.5 cm diagonal) Super Retina XDR display
+        price:
+          type: string
+          description: price of the product
+          example: 100$
+        model:
+          type: string
+          description: model of the product
+          example: IPhone 12 64GB (PRODUCT)RED
+        brand:
+          type: string
+          description: brand of the product
+          example: Apple
+    ProductRequest:
+      type: object
+      properties:
+        productName:
+          type: string
+          description: name of the product
+          example: Apple iPhone 12 (64GB)
+        description:
+          type: string
+          description: description about the product
+          example: 6.1-inch (15.5 cm diagonal) Super Retina XDR display
+        price:
+          type: string
+          description: price of the product
+          example: 100$
+        model:
+          type: string
+          description: model of the product
+          example: IPhone 12 64GB (PRODUCT)RED
+        brand:
+          type: string
+          description: brand of the product
+          example: Apple
+    ProductResponse:
+      properties:
+        productId:
+          type: number
+          description: Unique identifier of the product
+          example: 68656
+    ErrorResponse:
+      required:
+      - error
+      type: object
+      properties:
+        message:
+          type: string
+          example: error occurred
+  requestBodies:
+    Product:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProductRequest'
