@@ -1,0 +1,1120 @@
+{
+	"info": {
+		"_postman_id": "fd16b91c-9b39-4437-ba98-6642f3eed393",
+		"name": "Product catalog service",
+		"description": "The product catalog API supports the creation and management of the product. The API includes the following capabilities and operations:\n\n**Create Product**\n\n**Update Product**\n\n**Delete Product**\n\n**Publish Product**\n\n<br>\nThe following resource collections are offered by this API:\n\n\n**Products** - Products represents collection of products that is sold by seller. \n\n",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "products",
+			"item": [
+				{
+					"name": "{product Id}",
+					"item": [
+						{
+							"name": "Retrieve product for a given product Id.",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.collectionVariables.get(\"productId\");"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"description": "(Required) Id of the seller.",
+										"key": "sellerId",
+										"value": "SL-1234-68686755"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/products/{{productId}}",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"products",
+										"{{productId}}"
+									]
+								},
+								"description": "API to get product for a given product Id.\n"
+							},
+							"response": [
+								{
+									"name": "Return the product for a productId.",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"description": "(Required) Id of the seller.",
+												"key": "sellerId",
+												"value": "SL-1234-68686755"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/products/:productId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"products",
+												":productId"
+											],
+											"variable": [
+												{
+													"key": "productId"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n \"productId\": 867856,\n \"productName\": \"Apple iPhone 12 (64GB)\",\n \"productStatus\": \"Draft\",\n \"description\": \"6.1-inch (15.5 cm diagonal) Super Retina XDR display\",\n \"price\": \"100$\",\n \"model\": \"IPhone 12 64GB (PRODUCT)RED\",\n \"brand\": \"Apple\"\n}"
+								},
+								{
+									"name": "Not authorized",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"description": "(Required) Id of the seller.",
+												"key": "sellerId",
+												"value": "SL-1234-68686755"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/products/:productId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"products",
+												":productId"
+											],
+											"variable": [
+												{
+													"key": "productId"
+												}
+											]
+										}
+									},
+									"status": "Unauthorized",
+									"code": 401,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n \"message\": \"error occurred\"\n}"
+								},
+								{
+									"name": "Product not found.",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"description": "(Required) Id of the seller.",
+												"key": "sellerId",
+												"value": "SL-1234-68686755"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/products/:productId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"products",
+												":productId"
+											],
+											"variable": [
+												{
+													"key": "productId"
+												}
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n \"message\": \"error occurred\"\n}"
+								},
+								{
+									"name": "Internal server error.",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"description": "(Required) Id of the seller.",
+												"key": "sellerId",
+												"value": "SL-1234-68686755"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/products/:productId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"products",
+												":productId"
+											],
+											"variable": [
+												{
+													"key": "productId"
+												}
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n \"message\": \"error occurred\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Delete product.",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.collectionVariables.get(\"productId\");"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"description": "(Required) Id of the seller",
+										"key": "sellerId",
+										"value": "SL-1234-68686755"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/products/{{productId}}",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"products",
+										"{{productId}}"
+									]
+								},
+								"description": "delete product by id."
+							},
+							"response": [
+								{
+									"name": "Successfully deleted product.",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [
+											{
+												"description": "(Required) Id of the seller",
+												"key": "sellerId",
+												"value": "SL-1234-68686755"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/products/:productId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"products",
+												":productId"
+											],
+											"variable": [
+												{
+													"key": "productId"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n \"message\": \"error occurred\"\n}"
+								},
+								{
+									"name": "Not authorized",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [
+											{
+												"description": "(Required) Id of the seller",
+												"key": "sellerId",
+												"value": "SL-1234-68686755"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/products/:productId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"products",
+												":productId"
+											],
+											"variable": [
+												{
+													"key": "productId"
+												}
+											]
+										}
+									},
+									"status": "Unauthorized",
+									"code": 401,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n \"message\": \"error occurred\"\n}"
+								},
+								{
+									"name": "Product not found.",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [
+											{
+												"description": "(Required) Id of the seller",
+												"key": "sellerId",
+												"value": "SL-1234-68686755"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/products/:productId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"products",
+												":productId"
+											],
+											"variable": [
+												{
+													"key": "productId"
+												}
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n \"message\": \"error occurred\"\n}"
+								},
+								{
+									"name": "Internal server error.",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [
+											{
+												"description": "(Required) Id of the seller",
+												"key": "sellerId",
+												"value": "SL-1234-68686755"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/products/:productId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"products",
+												":productId"
+											],
+											"variable": [
+												{
+													"key": "productId"
+												}
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n \"message\": \"error occurred\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Publish product",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.collectionVariables.get(\"productId\");"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"description": "(Required) Id of the seller",
+										"key": "sellerId",
+										"value": "SL-1234-68686755"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/products/{{productId}}/publish",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"products",
+										"{{productId}}",
+										"publish"
+									]
+								},
+								"description": "Publish product. After products are published it can be bought by buyer."
+							},
+							"response": [
+								{
+									"name": "Product published.",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"description": "(Required) Id of the seller",
+												"key": "sellerId",
+												"value": "SL-1234-68686755"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/products/:productId/publish",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"products",
+												":productId",
+												"publish"
+											],
+											"variable": [
+												{
+													"key": "productId"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Not authorized",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"description": "(Required) Id of the seller",
+												"key": "sellerId",
+												"value": "SL-1234-68686755"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/products/:productId/publish",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"products",
+												":productId",
+												"publish"
+											],
+											"variable": [
+												{
+													"key": "productId"
+												}
+											]
+										}
+									},
+									"status": "Unauthorized",
+									"code": 401,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n \"message\": \"error occurred\"\n}"
+								},
+								{
+									"name": "Resource not found.",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"description": "(Required) Id of the seller",
+												"key": "sellerId",
+												"value": "SL-1234-68686755"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/products/:productId/publish",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"products",
+												":productId",
+												"publish"
+											],
+											"variable": [
+												{
+													"key": "productId"
+												}
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n \"message\": \"error occurred\"\n}"
+								},
+								{
+									"name": "Internal server error.",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"description": "(Required) Id of the seller",
+												"key": "sellerId",
+												"value": "SL-1234-68686755"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/products/:productId/publish",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"products",
+												":productId",
+												"publish"
+											],
+											"variable": [
+												{
+													"key": "productId"
+												}
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n \"message\": \"error occurred\"\n}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Create a new product.",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonResponse = pm.response.json();\r",
+									"pm.collectionVariables.set(\"productId\", jsonResponse.productId);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"description": "(Required) Id of the seller.",
+								"key": "sellerId",
+								"value": "SL-1234-68686755"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"productName\": \"Apple iPhone 12 (64GB)\",\n    \"description\": \"6.1-inch (15.5 cm diagonal) Super Retina XDR display\",\n    \"price\": \"100$\",\n    \"model\": \"IPhone 12 64GB (PRODUCT)RED\",\n    \"brand\": \"Apple\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/products",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Product created successfully.",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"description": "(Required) Id of the seller.",
+										"key": "sellerId",
+										"value": "SL-1234-68686755"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/products",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"products"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"productId\": 68656\n}"
+						},
+						{
+							"name": "Not authorized.",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"description": "(Required) Id of the seller.",
+										"key": "sellerId",
+										"value": "SL-1234-68686755"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/products",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"products"
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"message\": \"error occurred\"\n}"
+						},
+						{
+							"name": "Internal server error.",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"description": "(Required) Id of the seller.",
+										"key": "sellerId",
+										"value": "SL-1234-68686755"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/products",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"products"
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"message\": \"error occurred\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Return list of products.",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"description": "(Required) Id of the seller",
+								"key": "sellerId",
+								"value": "SL-1234-68686755"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/products?status=DRAFT&query=Apple",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"products"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "DRAFT",
+									"description": "Status of the product (DRAFT,PUBLISHED)."
+								},
+								{
+									"key": "query",
+									"value": "Apple",
+									"description": "Free text search query"
+								}
+							]
+						},
+						"description": "Return list of products.\n"
+					},
+					"response": [
+						{
+							"name": "List of all products based on optional status or free text search query.",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"description": "(Required) Id of the seller",
+										"key": "sellerId",
+										"value": "SL-1234-68686755"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/products?status=DRAFT&query=Apple",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"products"
+									],
+									"query": [
+										{
+											"key": "status",
+											"value": "DRAFT"
+										},
+										{
+											"key": "query",
+											"value": "Apple"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"results\": [\n  {\n   \"productId\": 867856,\n   \"productName\": \"Apple iPhone 12 (64GB)\",\n   \"productStatus\": \"Draft\",\n   \"description\": \"6.1-inch (15.5 cm diagonal) Super Retina XDR display\",\n   \"price\": \"100$\",\n   \"model\": \"IPhone 12 64GB (PRODUCT)RED\",\n   \"brand\": \"Apple\"\n  },\n  {\n   \"productId\": 867856,\n   \"productName\": \"Apple iPhone 12 (64GB)\",\n   \"productStatus\": \"Draft\",\n   \"description\": \"6.1-inch (15.5 cm diagonal) Super Retina XDR display\",\n   \"price\": \"100$\",\n   \"model\": \"IPhone 12 64GB (PRODUCT)RED\",\n   \"brand\": \"Apple\"\n  }\n ]\n}"
+						},
+						{
+							"name": "Not authorized",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"description": "(Required) Id of the seller",
+										"key": "sellerId",
+										"value": "SL-1234-68686755"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/products?status=DRAFT&query=Apple",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"products"
+									],
+									"query": [
+										{
+											"key": "status",
+											"value": "DRAFT"
+										},
+										{
+											"key": "query",
+											"value": "Apple"
+										}
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"message\": \"error occurred\"\n}"
+						},
+						{
+							"name": "Internal server error.",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"description": "(Required) Id of the seller",
+										"key": "sellerId",
+										"value": "SL-1234-68686755"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/products?status=DRAFT&query=Apple",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"products"
+									],
+									"query": [
+										{
+											"key": "status",
+											"value": "DRAFT"
+										},
+										{
+											"key": "query",
+											"value": "Apple"
+										}
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"message\": \"error occurred\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Update product.",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"description": "(Required) Id of the seller",
+								"key": "sellerId",
+								"value": "SL-1234-68686755"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"productId\": 867856,\n    \"productName\": \"Apple iPhone 12 (64GB)\",\n    \"productStatus\": \"Draft\",\n    \"description\": \"6.1-inch (15.5 cm diagonal) Super Retina XDR display\",\n    \"price\": \"100$\",\n    \"model\": \"IPhone 12 64GB (PRODUCT)RED\",\n    \"brand\": \"Apple\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/products",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"products"
+							]
+						},
+						"description": "Update product.\n"
+					},
+					"response": [
+						{
+							"name": "Product updated successfully.",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"description": "(Required) Id of the seller",
+										"key": "sellerId",
+										"value": "SL-1234-68686755"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"productId\": 867856,\n    \"productName\": \"Apple iPhone 12 (64GB)\",\n    \"productStatus\": \"Draft\",\n    \"description\": \"6.1-inch (15.5 cm diagonal) Super Retina XDR display\",\n    \"price\": \"100$\",\n    \"model\": \"IPhone 12 64GB (PRODUCT)RED\",\n    \"brand\": \"Apple\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/products",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"products"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Product created successfully.",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"description": "(Required) Id of the seller",
+										"key": "sellerId",
+										"value": "SL-1234-68686755"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"productId\": 867856,\n    \"productName\": \"Apple iPhone 12 (64GB)\",\n    \"productStatus\": \"Draft\",\n    \"description\": \"6.1-inch (15.5 cm diagonal) Super Retina XDR display\",\n    \"price\": \"100$\",\n    \"model\": \"IPhone 12 64GB (PRODUCT)RED\",\n    \"brand\": \"Apple\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/products",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"products"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"productId\": 68656\n}"
+						},
+						{
+							"name": "Not authorized.",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"description": "(Required) Id of the seller",
+										"key": "sellerId",
+										"value": "SL-1234-68686755"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"productId\": 867856,\n    \"productName\": \"Apple iPhone 12 (64GB)\",\n    \"productStatus\": \"Draft\",\n    \"description\": \"6.1-inch (15.5 cm diagonal) Super Retina XDR display\",\n    \"price\": \"100$\",\n    \"model\": \"IPhone 12 64GB (PRODUCT)RED\",\n    \"brand\": \"Apple\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/products",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"products"
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"message\": \"error occurred\"\n}"
+						},
+						{
+							"name": "Internal server error.",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"description": "(Required) Id of the seller",
+										"key": "sellerId",
+										"value": "SL-1234-68686755"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"productId\": 867856,\n    \"productName\": \"Apple iPhone 12 (64GB)\",\n    \"productStatus\": \"Draft\",\n    \"description\": \"6.1-inch (15.5 cm diagonal) Super Retina XDR display\",\n    \"price\": \"100$\",\n    \"model\": \"IPhone 12 64GB (PRODUCT)RED\",\n    \"brand\": \"Apple\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/products",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"products"
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"message\": \"error occurred\"\n}"
+						}
+					]
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "localhost:8080"
+		}
+	]
+}

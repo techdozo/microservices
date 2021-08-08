@@ -150,7 +150,7 @@ paths:
     get:
       tags:
       - Seller
-      summary: Retrive product for a given product Id.
+      summary: Retrieve product for a given product Id.
       description: |
         API to get product for a given product Id.
       operationId: getProductByID

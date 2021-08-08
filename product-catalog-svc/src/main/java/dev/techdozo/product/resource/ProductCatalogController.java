@@ -28,6 +28,8 @@ public class ProductCatalogController {
       @RequestHeader("sellerId") String sellerId,
       @Valid @RequestBody ProductRequest productRequest) {
 
+    log.info("Creating product, name {}", productRequest.getProductName());
+
     var product = ProductRequestMapper.MAPPER.map(productRequest);
     var productCatalogCommand = productCatalogFactory.getProductCatalogCommand();
 
@@ -41,6 +43,8 @@ public class ProductCatalogController {
   public ResponseEntity<ProductResponse> updateProduct(
       @RequestHeader("sellerId") String sellerId,
       @Valid @RequestBody ProductRequest productRequest) {
+
+    log.info("Updating product, name {}", productRequest.getProductName());
 
     var product = ProductRequestMapper.MAPPER.map(productRequest);
     var productCatalogCommand = productCatalogFactory.getProductCatalogCommand();
@@ -58,6 +62,8 @@ public class ProductCatalogController {
   public ResponseEntity<GetProductResponse> getProductById(
       @RequestHeader("sellerId") String sellerId, @PathVariable @NonNull Long productId) {
 
+    log.info("Getting product, id {}", productId);
+
     var productCatalogQuery = productCatalogFactory.getProductQuery();
 
     var product = productCatalogQuery.getProduct(productId);
@@ -70,6 +76,8 @@ public class ProductCatalogController {
   @GetMapping("/products")
   public ResponseEntity<List<GetProductResponse>> listProducts(
       @RequestHeader("sellerId") String sellerId, @RequestParam String status) {
+
+    log.info("Getting all products");
 
     var productCatalogQuery = productCatalogFactory.getProductQuery();
 
@@ -88,6 +96,8 @@ public class ProductCatalogController {
   public ResponseEntity<Void> deleteProduct(
       @RequestHeader("sellerId") String sellerId, @PathVariable @NonNull Long productId) {
 
+    log.info("Deleting product, id {}", productId);
+
     var productCatalogCommand = productCatalogFactory.getProductCatalogCommand();
 
     productCatalogCommand.deleteProduct(productId);
@@ -98,6 +108,8 @@ public class ProductCatalogController {
   @PostMapping("/products/{productId}/publish")
   public ResponseEntity<Void> publishProduct(
       @RequestHeader("sellerId") String sellerId, @PathVariable @NonNull Long productId) {
+
+    log.info("Publishing product, id {}", productId);
 
     var productCatalogCommand = productCatalogFactory.getProductCatalogCommand();
 
